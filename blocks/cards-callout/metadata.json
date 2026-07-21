@@ -1,0 +1,39 @@
+{
+  "variantName": "cards-callout",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-21T15:54:31.964Z",
+  "sourceContext": {
+    "originUrl": "https://www.dnb.com/en-us/",
+    "originPage": "DNB homepage D-U-N-S Number dark callout",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "compact",
+    "purpose": "callout-card",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "icon eyebrow + heading + description + CTA on dark section",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "single dark-themed callout card",
+      "full-bleed dark section with an icon-led CTA card"
+    ],
+    "notSuitableFor": [
+      "light card grids",
+      "multi-item layouts"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-21T15:54:31.964Z"
+  }
+}

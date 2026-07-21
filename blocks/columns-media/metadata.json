@@ -1,0 +1,40 @@
+{
+  "variantName": "columns-media",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-07-21T15:54:31.964Z",
+  "sourceContext": {
+    "originUrl": "https://www.dnb.com/en-us/",
+    "originPage": "DNB homepage 'AI Breaks Without a Trusted Foundation' section",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "text-media-split",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "text column (heading + paragraph + link list) + image column",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "side-by-side text and image",
+      "narrative sections with a supporting photo",
+      "2-up informational layouts"
+    ],
+    "notSuitableFor": [
+      "repeating card grids",
+      "single-column text"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-21T15:54:31.964Z"
+  }
+}

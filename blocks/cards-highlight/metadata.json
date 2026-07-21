@@ -1,0 +1,39 @@
+{
+  "variantName": "cards-highlight",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-21T15:54:31.964Z",
+  "sourceContext": {
+    "originUrl": "https://www.dnb.com/en-us/",
+    "originPage": "DNB homepage MCP Server highlighted card",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "highlight-card",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "icon + heading + description + CTA",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "single highlighted promotional card",
+      "icon-led feature callout on light background"
+    ],
+    "notSuitableFor": [
+      "dark-themed callouts",
+      "large multi-item grids"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-21T15:54:31.964Z"
+  }
+}

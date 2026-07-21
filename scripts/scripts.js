@@ -341,31 +341,11 @@ function decorateSections(main) {
   });
 }
 
-// Universal Editor instrumentation: attributes that carry the authoring
-// data model binding. Moved from source to generated elements so blocks
-// stay editable after their DOM is rebuilt during decoration.
-const INSTRUMENTATION_ATTRS = ['data-aue-resource', 'data-aue-type', 'data-aue-behavior', 'data-aue-model', 'data-aue-prop', 'data-aue-label', 'data-aue-filter', 'data-richtext-resource', 'data-richtext-prop'];
-
-/**
- * Moves Universal Editor instrumentation attributes from one element to another.
- * @param {Element} from The source element
- * @param {Element} to The target element
- */
-export function moveInstrumentation(from, to) {
-  if (!from || !to) return;
-  INSTRUMENTATION_ATTRS.forEach((attr) => {
-    const value = from.getAttribute(attr);
-    if (value !== null) {
-      to.setAttribute(attr, value);
-      from.removeAttribute(attr);
-    }
-  });
-}
-
 /**
  * Decorates the main element.
  * @param {Element} main The main element
  */
+// eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);

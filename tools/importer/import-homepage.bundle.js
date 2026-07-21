@@ -226,27 +226,6 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/form.js
-  function parse7(element, { document }) {
-    const isSection = element.tagName === "SECTION";
-    if (!isSection) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const formDef = document.createElement("a");
-    formDef.href = "/forms/schedule-a-strategy-session.json";
-    formDef.textContent = "Form Definition";
-    const submit = document.createElement("a");
-    submit.href = "https://www.dnb.com/en-us/api/forms/submit";
-    submit.textContent = "Submit";
-    const cells = [
-      [formDef],
-      [submit]
-    ];
-    const block = WebImporter.Blocks.createBlock(document, { name: "form", cells });
-    element.replaceWith(block);
-  }
-
   // tools/importer/transformers/dnb-cleanup.js
   var TransformHook = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
   function transform(hookName, element, payload) {
@@ -382,6 +361,21 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/import-homepage.js
+  var FORM_FRAGMENT_PATH = "/fragments/schedule-a-strategy-session";
+  function formFragmentParser(element, { document }) {
+    if (element.tagName !== "SECTION") {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const link = document.createElement("a");
+    link.href = FORM_FRAGMENT_PATH;
+    link.textContent = FORM_FRAGMENT_PATH;
+    const block = WebImporter.Blocks.createBlock(document, {
+      name: "fragment",
+      cells: [[link]]
+    });
+    element.replaceWith(block);
+  }
   var parsers = {
     "hero-home": parse,
     "columns-media": parse2,
@@ -389,7 +383,7 @@ var CustomImportScript = (() => {
     "cards-solutions": parse4,
     "cards-callout": parse5,
     "carousel-stories": parse6,
-    form: parse7
+    form: formFragmentParser
   };
   var PAGE_TEMPLATE = {
     name: "homepage",

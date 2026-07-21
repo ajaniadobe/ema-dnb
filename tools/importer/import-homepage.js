@@ -8,12 +8,34 @@ import cardsHighlightParser from './parsers/cards-highlight.js';
 import cardsSolutionsParser from './parsers/cards-solutions.js';
 import cardsCalloutParser from './parsers/cards-callout.js';
 import carouselStoriesParser from './parsers/carousel-stories.js';
-import formParser from './parsers/form.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/dnb-cleanup.js';
 import sectionsTransformer from './transformers/dnb-sections.js';
 import dmImagesTransformer from './transformers/dnb-dm-images.js';
+
+// The lead-capture form lives in a reusable fragment
+// (/fragments/schedule-a-strategy-session). On the homepage the form section is
+// replaced by a fragment block that includes it, rather than an inline form.
+const FORM_FRAGMENT_PATH = '/fragments/schedule-a-strategy-session';
+
+function formFragmentParser(element, { document }) {
+  // Two form instances are mapped: the section wrapper and the bare React
+  // <form> shell. Only the section becomes the fragment block; the empty
+  // shell (and any already-processed node) is simply unwrapped/removed.
+  if (element.tagName !== 'SECTION') {
+    element.replaceWith(...element.childNodes);
+    return;
+  }
+  const link = document.createElement('a');
+  link.href = FORM_FRAGMENT_PATH;
+  link.textContent = FORM_FRAGMENT_PATH;
+  const block = WebImporter.Blocks.createBlock(document, {
+    name: 'fragment',
+    cells: [[link]],
+  });
+  element.replaceWith(block);
+}
 
 // PARSER REGISTRY
 const parsers = {
@@ -23,7 +45,7 @@ const parsers = {
   'cards-solutions': cardsSolutionsParser,
   'cards-callout': cardsCalloutParser,
   'carousel-stories': carouselStoriesParser,
-  form: formParser,
+  form: formFragmentParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json

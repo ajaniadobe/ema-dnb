@@ -1,7 +1,25 @@
+/* Block: form -- "Schedule a Strategy Session" lead-capture form.
+   Values extracted from source computed styles at https://www.dnb.com/en-us/
+   (section contact-form_container / form contact-form_formContainer). */
+
+/* ---- Form card (the decorated <form> inside .form block) ---- */
+.form form {
+  display: grid;
+  grid-auto-flow: row;
+  box-sizing: border-box;
+  margin: 4px 0 0;
+  padding: 48px 40px;
+  border-radius: 32px;
+  background-color: var(--background-color); /* #fff */
+  color: var(--text-color);
+  box-shadow: rgb(0 81 114 / 10%) 0 4px 15px 0;
+}
+
+/* ---- Field wrappers ---- */
 .form .field-wrapper {
   display: grid;
   grid-auto-flow: row;
-  align-items: center;
+  align-items: start;
 }
 
 .form fieldset {
@@ -12,40 +30,24 @@
   padding: 0;
 }
 
-.form form > .field-wrapper + .field-wrapper,
-.form form fieldset .field-wrapper + .field-wrapper {
-  margin-top: 24px;
+/* ---- Heading: "Schedule a Strategy Session" ---- */
+.form form h2 {
+  margin: 0 0 24px;
+  font-family: var(--heading-font-family); /* Avenir LT Std */
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 44px;
+  color: var(--text-color); /* #000 */
 }
 
-.form form > .selection-wrapper + .selection-wrapper,
-.form form fieldset .selection-wrapper + .selection-wrapper {
-  margin-top: 0.25em;
-}
-
-@media (width >= 600px) {
-  .form fieldset {
-    grid-template-columns: repeat(2, auto);
-    gap: 0.25em 24px;
-  }
-
-  .form form > .selection-wrapper + .selection-wrapper,
-  .form form fieldset .field-wrapper + .field-wrapper,
-  .form form fieldset .selection-wrapper + .selection-wrapper {
-    margin-top: 0;
-  }
-}
-
-@media (width >= 900px) {
-  .form fieldset {
-    grid-template-columns: repeat(3, auto);
-  }
-}
-
+/* ---- Labels (source uses placeholders only; keep labels compact) ---- */
 .form label,
 .form fieldset > legend {
   margin-bottom: 0.25em;
+  font-family: var(--body-font-family);
   font-size: var(--body-font-size-s);
   font-weight: 700;
+  color: var(--text-color);
 }
 
 .form .selection-wrapper label {
@@ -53,19 +55,28 @@
   font-weight: normal;
 }
 
+.form label[data-required]::after {
+  content: '*';
+  color: var(--text-color);
+  margin-inline-start: 1ch;
+}
+
+/* ---- Text/email inputs and selects (step1Input) ---- */
 .form input,
 .form select,
 .form textarea {
   box-sizing: border-box;
   display: block;
   width: 100%;
-  margin: 0;
-  padding: 0.5em;
+  margin: 0 0 24px;
+  padding: 16px;
+  border: 1px solid rgb(214 214 214);
   border-radius: 4px;
-  border: 1px solid var(--dark-color);
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-size: var(--body-font-size-s);
+  background-color: var(--background-color); /* #fff */
+  color: var(--text-color); /* #000 */
+  font-family: var(--body-font-family); /* Avenir LT Std */
+  font-size: 16px;
+  line-height: 19.2px;
   transition: border-color 0.2s;
 }
 
@@ -73,53 +84,78 @@
   resize: vertical;
 }
 
+.form input::placeholder {
+  color: var(--text-color);
+  opacity: 1;
+}
+
 .form input:hover,
 .form select:hover,
 .form textarea:hover {
-  border: 1px solid var(--text-color);
+  border-color: var(--text-color);
 }
 
 .form input:focus,
 .form select:focus,
 .form textarea:focus {
-  outline: 2px solid var(--link-color);
-  outline-offset: 2px;
+  outline: none;
+  border-color: var(--link-color); /* #005172 */
 }
 
 .form .selection-wrapper input {
   width: max-content;
+  margin: 0;
 }
 
-@media (width >= 600px) {
-  .form input,
-  .form select,
-  .form textarea {
-    max-width: 50vw;
-  }
-
-  .form .button {
-    max-width: max-content;
-  }
+/* ---- Submit button: "Next" ---- */
+.form .submit-wrapper {
+  display: block;
 }
 
-@media (width >= 900px) {
-  .form input,
-  .form select,
-  .form textarea {
-    max-width: 33vw;
-  }
+.form form button,
+.form .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 19px 48px 17px;
+  border: 1px solid transparent;
+  border-radius: 30px;
+  background-color: var(--link-color); /* #005172 */
+  color: var(--background-color); /* #fff */
+  font-family: var(--body-font-family); /* Avenir LT Std */
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 19.8px;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
+.form form button:hover,
+.form form button:focus,
+.form .button:hover,
+.form .button:focus {
+  background-color: var(--link-color);
+  opacity: 0.9;
+}
+
+.form form button:disabled,
+.form form button:disabled:hover {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ---- Toggle (retained from base block for completeness) ---- */
 .form .field-wrapper.selection-wrapper {
   grid-auto-flow: column;
   justify-content: start;
+  align-items: center;
   gap: 1ch;
-}
-
-.form label[data-required]::after {
-  content: '*';
-  color: firebrick;
-  margin-inline-start: 1ch;
 }
 
 .form .toggle-wrapper .switch {
@@ -133,6 +169,7 @@
   opacity: 0;
   width: 52px;
   height: 28px;
+  margin: 0;
 }
 
 .form .toggle-wrapper .slider {
@@ -158,11 +195,6 @@
 
 .form .toggle-wrapper input:checked + .slider {
   background-color: var(--link-color);
-}
-
-.form .toggle-wrapper input:focus + .slider {
-  outline: 2px solid var(--link-color);
-  outline-offset: 2px;
 }
 
 .form .toggle-wrapper input:checked + .slider::before {

@@ -1,0 +1,16 @@
+:root {
+  --heading-font-family: "Avenir LT Std", "Nunito Sans", "Segoe UI", sans-serif;
+  --body-font-family: "Avenir LT Std", "Nunito Sans", "Segoe UI", sans-serif;
+  --background-color: #fff;
+  --text-color: #000;
+  --link-color: #005172;
+  --link-hover-color: #003a52;
+  --section-padding: 64px;
+  --nav-height: 82px;
+  --heading-size-xxl: 50px;
+  --heading-size-xl: 30px;
+  --heading-size-l: 30px;
+  --heading-size-m: 20px;
+  --heading-size-s: 18px;
+  --heading-size-xs: 16px;
+}

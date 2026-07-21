@@ -1,37 +1,111 @@
-.hero-home-container .hero-home-wrapper {
-  max-width: unset;
+/* Block: hero-home -- values extracted from source computed styles */
+
+/* Full-width: the hero illustration bleeds past the section max-width.
+   Overrides the global `main > .section > div { max-width: 1200px }` rule. */
+main .section .hero-home-wrapper {
+  max-width: none;
   padding: 0;
 }
 
 .hero-home {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  overflow: hidden;
+  background-color: var(--light-color); /* #f2f8f9 */
+  padding: 64px 24px;
+}
+
+/* --- Full-bleed illustration behind the content --- */
+.hero-home .hero-home-media,
+.hero-home picture.hero-home-illustration {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  z-index: 0;
+}
+
+.hero-home .hero-home-media {
+  overflow: hidden;
+}
+
+.hero-home .hero-home-illustration img,
+.hero-home .hero-home-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  display: block;
+}
+
+/* --- Content column sits above the illustration --- */
+.hero-home .hero-home-content {
+  position: relative;
+  z-index: 1;
+  max-width: min(100%, 1240px);
+  margin: 0 auto;
+}
+
+.hero-home .hero-home-content > div {
+  max-width: 520px;
 }
 
 .hero-home h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xxl); /* 36px mobile / 50px desktop */
+  font-weight: 300;
+  line-height: 1.1;
+  color: #000;
 }
 
-.hero-home picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+.hero-home p {
+  margin: 24px 0 0;
+  font-size: var(--body-font-size-m); /* 18px; 20px desktop below */
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgb(109 109 109);
 }
 
-.hero-home img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+/* --- CTA pill button (overrides the global plain-link button reset) --- */
+.hero-home .button-container {
+  margin-top: 32px;
+}
+
+main .hero-home a.button:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 19px 48px 17px;
+  border: 1px solid transparent;
+  border-radius: 30px;
+  background-color: var(--dark-color); /* #005172 */
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+main .hero-home a.button:hover,
+main .hero-home a.button:focus {
+  background-color: var(--dark-color);
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.9;
 }
 
 @media (width >= 900px) {
   .hero-home {
-    padding: 40px 32px;
+    padding: 180px 30px;
+  }
+
+  .hero-home h1 {
+    line-height: 55px; /* 50px font -> 55px line */
+  }
+
+  .hero-home p {
+    font-size: 20px;
+    line-height: 30px;
   }
 }

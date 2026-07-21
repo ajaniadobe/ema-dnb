@@ -52,15 +52,125 @@ var CustomImportScript = (() => {
           main.append(wrapper);
         }
       }
-      const formDef = document.createElement("a");
-      formDef.href = "/forms/schedule-a-strategy-session.json";
-      formDef.textContent = "Form Definition";
-      const submit = document.createElement("a");
-      submit.href = "https://www.dnb.com/en-us/api/forms/submit";
-      submit.textContent = "Submit";
+      const FORM_JSON = {
+        "name": "schedule-a-strategy-session",
+        "data": [
+          {
+            "Name": "email",
+            "Type": "email",
+            "Description": "",
+            "Placeholder": "Business Email *",
+            "Label": "Business Email",
+            "Read Only": "",
+            "Mandatory": true,
+            "Pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+            "Step": "",
+            "Min": "",
+            "Max": "",
+            "Value": "",
+            "Options": "",
+            "OptionNames": "",
+            "Fieldset": "",
+            "Repeatable": ""
+          },
+          {
+            "Name": "country",
+            "Type": "select",
+            "Description": "",
+            "Placeholder": "",
+            "Label": "Country",
+            "Read Only": "",
+            "Mandatory": true,
+            "Pattern": "",
+            "Step": "",
+            "Min": "",
+            "Max": "",
+            "Value": "US",
+            "Options": ",US,CA,AF,AL,DZ,AU,AT,BE,BR,BG,CN,HR,CZ,DK,EG,FI,FR,DE,GR,HK,HU,IN,ID,IE,IL,IT,JP,KR,MY,MX,NL,NZ,NO,PH,PL,PT,RO,SA,SG,SK,ZA,ES,SE,CH,TW,TH,TR,AE,GB,VN",
+            "OptionNames": [
+              "Select Country",
+              "United States",
+              "Canada",
+              "Afghanistan",
+              "Albania",
+              "Algeria",
+              "Australia",
+              "Austria",
+              "Belgium",
+              "Brazil",
+              "Bulgaria",
+              "China Mainland",
+              "Croatia",
+              "Czechia",
+              "Denmark",
+              "Egypt",
+              "Finland",
+              "France",
+              "Germany",
+              "Greece",
+              "Hong Kong SAR",
+              "Hungary",
+              "India",
+              "Indonesia",
+              "Ireland",
+              "Israel",
+              "Italy",
+              "Japan",
+              "Korea (South)",
+              "Malaysia",
+              "Mexico",
+              "Netherlands, Kingdom of the",
+              "New Zealand",
+              "Norway",
+              "Philippines",
+              "Poland",
+              "Portugal",
+              "Romania",
+              "Saudi Arabia",
+              "Singapore",
+              "Slovakia",
+              "South Africa",
+              "Spain",
+              "Sweden",
+              "Switzerland",
+              "Taiwan Region",
+              "Thailand",
+              "T\xFCrkiye",
+              "United Arab Emirates",
+              "United Kingdom",
+              "Viet Nam"
+            ],
+            "Fieldset": "",
+            "Repeatable": ""
+          },
+          {
+            "Name": "submit",
+            "Type": "submit",
+            "Description": "",
+            "Placeholder": "",
+            "Label": "Next",
+            "Read Only": "",
+            "Mandatory": "",
+            "Pattern": "",
+            "Step": "",
+            "Min": "",
+            "Max": "",
+            "Value": "",
+            "Options": "",
+            "OptionNames": "",
+            "Fieldset": "",
+            "Repeatable": ""
+          }
+        ],
+        ":type": "sheet"
+      };
+      const pre = document.createElement("pre");
+      const code = document.createElement("code");
+      code.textContent = JSON.stringify(FORM_JSON);
+      pre.append(code);
       const block = WebImporter.Blocks.createBlock(document, {
         name: "form",
-        cells: [[formDef], [submit]]
+        cells: [[pre]]
       });
       main.append(block);
       return [{

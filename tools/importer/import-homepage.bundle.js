@@ -47,7 +47,8 @@ var CustomImportScript = (() => {
     const heading = element.querySelector('[class*="textContainer"] h1, [class*="textContainer"] h2, h1');
     const description = element.querySelector('[class*="description"]');
     const cta = element.querySelector('[class*="textContainer"] a[class*="button"], [class*="textContainer"] a[href]');
-    if (!heading && !description && !image) {
+    const featured = element.querySelector('a[class*="featuredContainer"]');
+    if (!heading && !description && !image && !featured) {
       element.replaceWith(...element.childNodes);
       return;
     }
@@ -64,6 +65,22 @@ var CustomImportScript = (() => {
       textCell.push(p);
     }
     cells.push([textCell]);
+    if (featured) {
+      const href = featured.getAttribute("href");
+      const eyebrow = featured.querySelector('[class*="featuredEyebrow"]');
+      const title = featured.querySelector('[class*="featuredTitle"]');
+      const ctaText = featured.querySelector('[class*="featuredCta"]');
+      const link = document.createElement("a");
+      if (href) link.href = href;
+      const parts = [];
+      if (eyebrow) parts.push(eyebrow.textContent.trim());
+      if (title) parts.push(title.textContent.trim());
+      if (ctaText) parts.push(ctaText.textContent.trim());
+      link.textContent = parts.filter((t) => t).join(" \u2014 ");
+      const p = document.createElement("p");
+      p.appendChild(link);
+      cells.push([[p]]);
+    }
     const block = WebImporter.Blocks.createBlock(document, { name: "hero-home", cells });
     element.replaceWith(block);
   }
@@ -180,14 +197,19 @@ var CustomImportScript = (() => {
     const cells = [];
     containers.forEach((card) => {
       const isIntro = /introContainer/.test(card.className);
-      if (isIntro) return;
       const image = card.querySelector('img:not([src^="data:"])');
-      const title = card.querySelector('[class*="cardTitle"], h2, h3, h4');
+      const eyebrow = card.querySelector('[class*="cardEyebrow"], [class*="_eyebrow"]');
+      const title = card.querySelector('[class*="cardTitle"], [class*="_title"], h2, h3, h4');
       const cta = card.querySelector("a[href]");
-      if (!title && !(cta && cta.getAttribute("href"))) return;
+      if (!title && !eyebrow && !(cta && cta.getAttribute("href"))) return;
       const imageCell = document.createElement("div");
       if (image) imageCell.appendChild(image);
       const textCell = [];
+      if (eyebrow) {
+        const ep = document.createElement("p");
+        ep.textContent = eyebrow.textContent.trim();
+        textCell.push(ep);
+      }
       if (title) textCell.push(title);
       if (cta && cta.getAttribute("href")) {
         const p = document.createElement("p");

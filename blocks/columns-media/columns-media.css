@@ -1,33 +1,114 @@
+/* Block: columns-media
+   Two-region text + image layout (DNB "text-list-image-card").
+   Values extracted from source computed styles on dnb.com/en-us.
+   Light background comes from the section (.section.light), not the block. */
+
+/* ---- Row: mobile-first single column ---- */
 .columns-media > div {
   display: flex;
   flex-direction: column;
+  gap: 40px;
 }
 
 .columns-media img {
   width: 100%;
 }
 
+/* text region above image on mobile */
 .columns-media > div > div {
   order: 1;
 }
 
 .columns-media > div > .columns-media-img-col {
+  position: relative;
   order: 0;
 }
 
-.columns-media > div > .columns-media-img-col img {
-  display: block;
+/* ---- Text region ---- */
+.columns-media h2 {
+  margin: 0 0 24px;
+  font-size: var(--heading-font-size-xxl); /* 36px mobile / 50px desktop */
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--text-color);
 }
 
+.columns-media p {
+  margin: 0;
+  color: var(--text-color);
+}
+
+/* callout list: no bullets, divider rules between items, circle-check marker */
+.columns-media ul {
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.columns-media ul > li {
+  position: relative;
+  margin: 0;
+  padding: 32px 0 32px 36px;
+  border-bottom: 1px solid #d6d6d6;
+  font-size: 20px;
+  line-height: 30px;
+  color: var(--text-color);
+}
+
+.columns-media ul > li:last-child {
+  border-bottom: 0;
+}
+
+/* decorative circle-check marker in the left gutter */
+.columns-media ul > li::before {
+  content: "";
+  position: absolute;
+  top: 34px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--link-color);
+  border-radius: 50%;
+  background:
+    linear-gradient(45deg, transparent 45%, var(--link-color) 45%, var(--link-color) 55%, transparent 55%) no-repeat 6px 8px / 6px 6px,
+    linear-gradient(-45deg, transparent 45%, var(--link-color) 45%, var(--link-color) 55%, transparent 55%) no-repeat 8px 6px / 6px 6px;
+}
+
+.columns-media ul > li a {
+  display: inline;
+  color: var(--link-color);
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+/* ---- Image region ---- */
+.columns-media > div > .columns-media-img-col img {
+  display: block;
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+/* ---- Desktop: side-by-side, image offset down ---- */
 @media (width >= 900px) {
   .columns-media > div {
-    align-items: center;
-    flex-direction: unset;
-    gap: 24px;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 60px;
   }
 
   .columns-media > div > div {
-    flex: 1;
     order: unset;
+    flex: 1 1 0;
+  }
+
+  /* text ~55% / image ~45% split (source: 605px text vs 499px image) */
+  .columns-media > div > div:not(.columns-media-img-col) {
+    flex: 1.2 1 0;
+  }
+
+  .columns-media > div > .columns-media-img-col {
+    flex: 1 1 0;
+    margin-top: 40px;
   }
 }

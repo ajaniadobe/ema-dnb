@@ -18,8 +18,11 @@ export default function parse(element, { document }) {
   const description = element.querySelector('[class*="description"]');
   const cta = element.querySelector('[class*="textContainer"] a[class*="button"], [class*="textContainer"] a[href]');
 
+  // Featured promo sub-card (linked container with eyebrow, title, and CTA).
+  const featured = element.querySelector('a[class*="featuredContainer"]');
+
   // Empty-block guard
-  if (!heading && !description && !image) {
+  if (!heading && !description && !image && !featured) {
     element.replaceWith(...element.childNodes);
     return;
   }
@@ -42,6 +45,26 @@ export default function parse(element, { document }) {
     textCell.push(p);
   }
   cells.push([textCell]);
+
+  // Row 4: featured promo sub-card. Flattened into a single linked paragraph
+  // (eyebrow + title + CTA text) wrapped in an anchor to its destination, so
+  // the whole card round-trips as one call-to-action.
+  if (featured) {
+    const href = featured.getAttribute('href');
+    const eyebrow = featured.querySelector('[class*="featuredEyebrow"]');
+    const title = featured.querySelector('[class*="featuredTitle"]');
+    const ctaText = featured.querySelector('[class*="featuredCta"]');
+    const link = document.createElement('a');
+    if (href) link.href = href;
+    const parts = [];
+    if (eyebrow) parts.push(eyebrow.textContent.trim());
+    if (title) parts.push(title.textContent.trim());
+    if (ctaText) parts.push(ctaText.textContent.trim());
+    link.textContent = parts.filter((t) => t).join(' — ');
+    const p = document.createElement('p');
+    p.appendChild(link);
+    cells.push([[p]]);
+  }
 
   const block = WebImporter.Blocks.createBlock(document, { name: 'hero-home', cells });
   element.replaceWith(block);

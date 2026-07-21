@@ -1,0 +1,20 @@
+{
+  "status": "success",
+  "url": "https://www.dnb.com/en-us/",
+  "path": "en-us",
+  "timestamp": "2026-07-21T16:45:23.362Z",
+  "title": "Power Confident Business Decisions | Dun & Bradstreet",
+  "template": "homepage",
+  "blocks": [
+    "hero-home",
+    "columns-media",
+    "columns-media",
+    "cards-highlight",
+    "cards-solutions",
+    "cards-callout",
+    "carousel-stories",
+    "form",
+    "form",
+    "form"
+  ]
+}

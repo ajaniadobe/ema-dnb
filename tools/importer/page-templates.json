@@ -1,0 +1,110 @@
+{
+  "metadata": {
+    "projectType": "da"
+  },
+  "templates": [
+    {
+      "name": "homepage",
+      "urls": [
+        "https://www.dnb.com/en-us/"
+      ],
+      "representativeUrl": "https://www.dnb.com/en-us/",
+      "coverageGaps": [],
+      "description": "Dun & Bradstreet homepage with hero, AI context (text+image + highlight card), solutions card grid, D-U-N-S callout, customer stories carousel, and lead-capture form.",
+      "blocks": [
+        {
+          "name": "hero-home",
+          "instances": ["section[class*='hero-home_container']"]
+        },
+        {
+          "name": "columns-media",
+          "instances": [
+            "[class*='text-list-image-card_textContainer']",
+            "[class*='text-list-image-card_imageContainer']"
+          ]
+        },
+        {
+          "name": "cards-highlight",
+          "instances": ["[class*='text-list-image-card_cardContainer']"]
+        },
+        {
+          "name": "cards-solutions",
+          "instances": ["#product [class*='product-card-grid_cardsContainer']"]
+        },
+        {
+          "name": "cards-callout",
+          "instances": ["section[class*='product-card-grid-two-up_container']"],
+          "section": "dark"
+        },
+        {
+          "name": "carousel-stories",
+          "instances": ["section[class*='insight-card-carousel_container']"],
+          "section": "dark"
+        },
+        {
+          "name": "form",
+          "instances": [
+            "#form form[class*='contact-form_formContainer']",
+            "#form > section[class*='contact-form_container']"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1-hero",
+          "name": "Hero",
+          "selector": ["section[class*='hero-home_container']"],
+          "style": null,
+          "blocks": ["hero-home"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2-ai-context",
+          "name": "AI Context",
+          "selector": ["section[class*='text-list-image-card_container']"],
+          "style": null,
+          "blocks": ["columns-media", "cards-highlight"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3-solutions",
+          "name": "Solutions Card Grid",
+          "selector": ["#product"],
+          "style": null,
+          "blocks": ["cards-solutions"],
+          "defaultContent": [
+            "#product [class*='product-card-grid_eyebrow']",
+            "#product h2",
+            "#product [class*='product-card-grid_description']"
+          ]
+        },
+        {
+          "id": "section-4-duns-callout",
+          "name": "D-U-N-S Number Callout",
+          "selector": ["section[class*='product-card-grid-two-up_container']"],
+          "style": "dark",
+          "blocks": ["cards-callout"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-5-customer-stories",
+          "name": "Customer Stories Carousel",
+          "selector": ["section[class*='insight-card-carousel_container']"],
+          "style": "dark",
+          "blocks": ["carousel-stories"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-6-lead-form",
+          "name": "Lead-Capture Form",
+          "selector": ["#form > section[class*='contact-form_container']"],
+          "style": null,
+          "blocks": ["form"],
+          "defaultContent": [
+            "#form [class*='contact-form_plainTextContainer']"
+          ]
+        }
+      ]
+    }
+  ]
+}

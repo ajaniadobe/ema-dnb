@@ -1,0 +1,11 @@
+{
+  "type": "da",
+  "sites": {
+    "ema-dnb": {
+      "previewOrg": "ajaniadobe",
+      "previewSite": "ema-dnb",
+      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json",
+      "baseUrl": "https://www.dnb.com"
+    }
+  }
+}

@@ -110,9 +110,9 @@ export default async function decorate(block) {
   nav.setAttribute('aria-label', 'Main navigation');
 
   // Classify sections by content shape (generic — not positional):
-  //   brand   = has an <img>
   //   navItem = has an <h2> (megamenu trigger)
-  //   utility = has <ul> but no <h2>/<img>
+  //   utility = has <ul> (audience/tools lists; may contain icons)
+  //   brand   = has an <img> but no <ul> (logo)
   //   promo   = single link, no <ul>/<h2>/<img>
   const sections = [...fragment.querySelectorAll(':scope > div')];
   let brandSection = null;
@@ -120,9 +120,9 @@ export default async function decorate(block) {
   const utilitySections = [];
   const promoSections = [];
   sections.forEach((section) => {
-    if (section.querySelector('img')) brandSection = section;
-    else if (section.querySelector('h2')) navItemSections.push(section);
+    if (section.querySelector('h2')) navItemSections.push(section);
     else if (section.querySelector('ul')) utilitySections.push(section);
+    else if (section.querySelector('img')) brandSection = section;
     else promoSections.push(section);
   });
 
@@ -142,6 +142,39 @@ export default async function decorate(block) {
       });
     });
     utilityBar.append(inner);
+
+    // Search flyout: the tools link labelled "Search" becomes a toggle that
+    // reveals an inline search input, rather than navigating.
+    const searchItem = [...utilityBar.querySelectorAll('.nav-utility-tools a')]
+      .find((a) => /search/i.test(a.textContent) || /search/i.test(a.querySelector('img')?.getAttribute('alt') || ''));
+    if (searchItem) {
+      const flyout = document.createElement('div');
+      flyout.className = 'nav-search-flyout';
+      flyout.hidden = true;
+      flyout.innerHTML = `<form role="search" action="/en-us/search.html" method="get">
+          <input type="search" name="q" aria-label="Search" placeholder="Search dnb.com">
+          <button type="submit" aria-label="Submit search">Search</button>
+        </form>`;
+      utilityBar.append(flyout);
+
+      searchItem.setAttribute('role', 'button');
+      searchItem.setAttribute('aria-expanded', 'false');
+      searchItem.setAttribute('aria-controls', 'nav-search-flyout');
+      flyout.id = 'nav-search-flyout';
+      searchItem.addEventListener('click', (e) => {
+        e.preventDefault();
+        const open = searchItem.getAttribute('aria-expanded') === 'true';
+        searchItem.setAttribute('aria-expanded', open ? 'false' : 'true');
+        flyout.hidden = open;
+        if (!open) flyout.querySelector('input')?.focus();
+      });
+      document.addEventListener('click', (e) => {
+        if (!utilityBar.contains(e.target)) {
+          searchItem.setAttribute('aria-expanded', 'false');
+          flyout.hidden = true;
+        }
+      });
+    }
   }
 
   // Brand: logo link.

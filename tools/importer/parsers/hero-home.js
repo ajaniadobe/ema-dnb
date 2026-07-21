@@ -3,14 +3,11 @@
 /**
  * Parser for hero-home. Base: hero.
  * Source: https://www.dnb.com/en-us/
- * Generated for xwalk project (field-hinted output).
+ * DA project: plain document markup, no field-hint comments.
  *
- * Model fields (blocks/hero-home/_hero-home.json):
- *   image (reference)  -> row 2 background image
- *   imageAlt (text)    -> collapsed into <img alt>
- *   text (richtext)    -> row 3 title + subheading + CTA
- *
- * Library structure: 1 column, up to 3 rows (name, image, text).
+ * Library structure: 1 column, up to 3 rows (name, background image, text).
+ *   Row 2: background/hero image (optional)
+ *   Row 3: title (heading) + subheading + call-to-action link
  */
 export default function parse(element, { document }) {
   // Row 2: background/hero image
@@ -29,24 +26,20 @@ export default function parse(element, { document }) {
 
   const cells = [];
 
-  // Row 2: image cell (field: image). imageAlt collapses into the <img> alt attribute.
-  const imageCell = document.createDocumentFragment();
+  // Row 2: image cell (optional).
   if (image) {
-    imageCell.appendChild(document.createComment(' field:image '));
-    imageCell.appendChild(image);
+    cells.push([image]);
   }
-  cells.push([imageCell]);
 
-  // Row 3: text cell (field: text) - richtext holding heading, description, CTA.
-  const textCell = document.createDocumentFragment();
-  textCell.appendChild(document.createComment(' field:text '));
-  if (heading) textCell.appendChild(heading);
-  if (description) textCell.appendChild(description);
+  // Row 3: text cell holding heading, description and CTA (1 column).
+  const textCell = [];
+  if (heading) textCell.push(heading);
+  if (description) textCell.push(description);
   if (cta) {
     // Wrap CTA in a paragraph so it renders as a linked call-to-action.
     const p = document.createElement('p');
     p.appendChild(cta);
-    textCell.appendChild(p);
+    textCell.push(p);
   }
   cells.push([textCell]);
 

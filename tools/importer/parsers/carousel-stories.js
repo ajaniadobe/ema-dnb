@@ -3,18 +3,16 @@
 /**
  * Parser for carousel-stories. Base: carousel (container block).
  * Source: https://www.dnb.com/en-us/
- * Generated for xwalk project (field-hinted output).
+ * DA project: plain document markup, no field-hint comments.
  *
  * Container block: each slide = one row with 2 cells.
- *   cell 1: image -> field:media_image (media_imageAlt collapses into <img alt>)
- *   cell 2: text (title + CTA) -> field:content_text (richtext)
- *
- * Slide model (model "carousel-stories-item"): media_image, media_imageAlt, content_text.
+ *   cell 1: image (empty in source, but cell still emitted)
+ *   cell 2: text (title + CTA) as rich text
  *
  * Mapped instance is section[class*="insight-card-carousel_container"]. The first
  * cardContainer is the carousel intro (eyebrow + heading, no CTA target) and is skipped;
  * every remaining cardContainer is a story slide. Source slides carry no image, so the
- * media_image cell is left empty (still emitted, per container-block rules).
+ * image cell is left empty (still emitted, per container-block rules).
  */
 export default function parse(element, { document }) {
   const containers = Array.from(element.querySelectorAll('[class*="cardContainer"]'));
@@ -32,21 +30,17 @@ export default function parse(element, { document }) {
     // A slide needs at least a title or CTA target; skip decorative/empty cards.
     if (!title && !(cta && cta.getAttribute('href'))) return;
 
-    // Cell 1: media_image (field:media_image). media_imageAlt collapses into <img alt>.
-    const imageCell = document.createDocumentFragment();
-    if (image) {
-      imageCell.appendChild(document.createComment(' field:media_image '));
-      imageCell.appendChild(image);
-    }
+    // Cell 1: image (empty when the source slide has none, but cell must still be present).
+    const imageCell = document.createElement('div');
+    if (image) imageCell.appendChild(image);
 
-    // Cell 2: content_text (field:content_text) — title + CTA.
-    const textCell = document.createDocumentFragment();
-    textCell.appendChild(document.createComment(' field:content_text '));
-    if (title) textCell.appendChild(title);
+    // Cell 2: text — title + CTA as rich text.
+    const textCell = [];
+    if (title) textCell.push(title);
     if (cta && cta.getAttribute('href')) {
       const p = document.createElement('p');
       p.appendChild(cta);
-      textCell.appendChild(p);
+      textCell.push(p);
     }
 
     cells.push([imageCell, textCell]);

@@ -3,13 +3,11 @@
 /**
  * Parser for cards-solutions. Base: cards (container block).
  * Source: https://www.dnb.com/en-us/
- * Generated for xwalk project (field-hinted output).
+ * DA project: plain document markup, no field-hint comments.
  *
  * Container block: each solution card = one row with 2 cells.
- *   cell 1: image/icon -> field:image (imageAlt collapses into <img alt>)
- *   cell 2: text (title + description + CTA) -> field:text (richtext)
- *
- * Card model (model "card"): image, text.
+ *   cell 1: image/icon
+ *   cell 2: text (title + description + CTA) as rich text
  *
  * The mapped instance is the cards container
  * (#product [class*="product-card-grid_cardsContainer"]); iterate its child
@@ -27,22 +25,18 @@ export default function parse(element, { document }) {
     const description = card.querySelector('[class*="cardDescription"]');
     const cta = card.querySelector('a[class*="button"], a[class*="link"], a[href]');
 
-    // Cell 1: image (field:image). imageAlt collapses into <img alt>.
-    const imageCell = document.createDocumentFragment();
-    if (image) {
-      imageCell.appendChild(document.createComment(' field:image '));
-      imageCell.appendChild(image);
-    }
+    // Cell 1: image (may be empty, but cell must still be present).
+    const imageCell = document.createElement('div');
+    if (image) imageCell.appendChild(image);
 
-    // Cell 2: text (field:text) — title, description, CTA.
-    const textCell = document.createDocumentFragment();
-    textCell.appendChild(document.createComment(' field:text '));
-    if (title) textCell.appendChild(title);
-    if (description) textCell.appendChild(description);
+    // Cell 2: text — title, description, CTA as rich text.
+    const textCell = [];
+    if (title) textCell.push(title);
+    if (description) textCell.push(description);
     if (cta) {
       const p = document.createElement('p');
       p.appendChild(cta);
-      textCell.appendChild(p);
+      textCell.push(p);
     }
 
     cells.push([imageCell, textCell]);

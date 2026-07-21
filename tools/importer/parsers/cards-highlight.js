@@ -3,13 +3,11 @@
 /**
  * Parser for cards-highlight. Base: cards (container block).
  * Source: https://www.dnb.com/en-us/
- * Generated for xwalk project (field-hinted output).
+ * DA project: plain document markup, no field-hint comments.
  *
  * Container block: each card = one row with 2 cells.
- *   cell 1: image/icon  -> field:image (imageAlt collapses into <img alt>)
- *   cell 2: text (title + description + CTA) -> field:text (richtext)
- *
- * Card model (blocks/cards-highlight/_cards-highlight.json -> model "card"): image, text.
+ *   cell 1: image/icon
+ *   cell 2: text (title + description + CTA) as rich text
  *
  * The mapped instance selector is the card container itself
  * ([class*="text-list-image-card_cardContainer"]), so each matched element is one card.
@@ -28,22 +26,18 @@ export default function parse(element, { document }) {
     return;
   }
 
-  // Cell 1: image (field:image). imageAlt collapses into the <img> alt attribute.
-  const imageCell = document.createDocumentFragment();
-  if (image) {
-    imageCell.appendChild(document.createComment(' field:image '));
-    imageCell.appendChild(image);
-  }
+  // Cell 1: image (may be empty, but cell must still be present).
+  const imageCell = document.createElement('div');
+  if (image) imageCell.appendChild(image);
 
-  // Cell 2: text (field:text) — richtext with title, description, CTA.
-  const textCell = document.createDocumentFragment();
-  textCell.appendChild(document.createComment(' field:text '));
-  if (title) textCell.appendChild(title);
-  if (description) textCell.appendChild(description);
+  // Cell 2: text — title, description, CTA as rich text.
+  const textCell = [];
+  if (title) textCell.push(title);
+  if (description) textCell.push(description);
   if (cta) {
     const p = document.createElement('p');
     p.appendChild(cta);
-    textCell.appendChild(p);
+    textCell.push(p);
   }
 
   // One card = one row, 2 columns.

@@ -3,9 +3,8 @@
 /**
  * Parser for columns-media. Base: columns.
  * Source: https://www.dnb.com/en-us/
- * Generated for xwalk project.
+ * DA project: plain document markup, no field-hint comments.
  *
- * Columns blocks use ONLY default content — no field-hint comments (per hinting rules).
  * Layout: 1 row, 2 columns. Column 1 = text (eyebrow/title/description/callout list).
  * Column 2 = the accompanying image.
  *

@@ -52,20 +52,16 @@ var CustomImportScript = (() => {
       return;
     }
     const cells = [];
-    const imageCell = document.createDocumentFragment();
     if (image) {
-      imageCell.appendChild(document.createComment(" field:image "));
-      imageCell.appendChild(image);
+      cells.push([image]);
     }
-    cells.push([imageCell]);
-    const textCell = document.createDocumentFragment();
-    textCell.appendChild(document.createComment(" field:text "));
-    if (heading) textCell.appendChild(heading);
-    if (description) textCell.appendChild(description);
+    const textCell = [];
+    if (heading) textCell.push(heading);
+    if (description) textCell.push(description);
     if (cta) {
       const p = document.createElement("p");
       p.appendChild(cta);
-      textCell.appendChild(p);
+      textCell.push(p);
     }
     cells.push([textCell]);
     const block = WebImporter.Blocks.createBlock(document, { name: "hero-home", cells });
@@ -104,19 +100,15 @@ var CustomImportScript = (() => {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const imageCell = document.createDocumentFragment();
-    if (image) {
-      imageCell.appendChild(document.createComment(" field:image "));
-      imageCell.appendChild(image);
-    }
-    const textCell = document.createDocumentFragment();
-    textCell.appendChild(document.createComment(" field:text "));
-    if (title) textCell.appendChild(title);
-    if (description) textCell.appendChild(description);
+    const imageCell = document.createElement("div");
+    if (image) imageCell.appendChild(image);
+    const textCell = [];
+    if (title) textCell.push(title);
+    if (description) textCell.push(description);
     if (cta) {
       const p = document.createElement("p");
       p.appendChild(cta);
-      textCell.appendChild(p);
+      textCell.push(p);
     }
     const cells = [[imageCell, textCell]];
     const block = WebImporter.Blocks.createBlock(document, { name: "cards-highlight", cells });
@@ -133,19 +125,15 @@ var CustomImportScript = (() => {
       const title = card.querySelector('[class*="cardTitle"], h2, h3, h4');
       const description = card.querySelector('[class*="cardDescription"]');
       const cta = card.querySelector('a[class*="button"], a[class*="link"], a[href]');
-      const imageCell = document.createDocumentFragment();
-      if (image) {
-        imageCell.appendChild(document.createComment(" field:image "));
-        imageCell.appendChild(image);
-      }
-      const textCell = document.createDocumentFragment();
-      textCell.appendChild(document.createComment(" field:text "));
-      if (title) textCell.appendChild(title);
-      if (description) textCell.appendChild(description);
+      const imageCell = document.createElement("div");
+      if (image) imageCell.appendChild(image);
+      const textCell = [];
+      if (title) textCell.push(title);
+      if (description) textCell.push(description);
       if (cta) {
         const p = document.createElement("p");
         p.appendChild(cta);
-        textCell.appendChild(p);
+        textCell.push(p);
       }
       cells.push([imageCell, textCell]);
     });
@@ -166,19 +154,15 @@ var CustomImportScript = (() => {
       const title = card.querySelector('[class*="cardTitle"], h2, h3, h4');
       const description = card.querySelector('[class*="cardDescription"]');
       const cta = card.querySelector('a[class*="button"], a[class*="link"], a[href]');
-      const imageCell = document.createDocumentFragment();
-      if (image) {
-        imageCell.appendChild(document.createComment(" field:image "));
-        imageCell.appendChild(image);
-      }
-      const textCell = document.createDocumentFragment();
-      textCell.appendChild(document.createComment(" field:text "));
-      if (title) textCell.appendChild(title);
-      if (description) textCell.appendChild(description);
+      const imageCell = document.createElement("div");
+      if (image) imageCell.appendChild(image);
+      const textCell = [];
+      if (title) textCell.push(title);
+      if (description) textCell.push(description);
       if (cta) {
         const p = document.createElement("p");
         p.appendChild(cta);
-        textCell.appendChild(p);
+        textCell.push(p);
       }
       cells.push([imageCell, textCell]);
     });
@@ -201,18 +185,14 @@ var CustomImportScript = (() => {
       const title = card.querySelector('[class*="cardTitle"], h2, h3, h4');
       const cta = card.querySelector("a[href]");
       if (!title && !(cta && cta.getAttribute("href"))) return;
-      const imageCell = document.createDocumentFragment();
-      if (image) {
-        imageCell.appendChild(document.createComment(" field:media_image "));
-        imageCell.appendChild(image);
-      }
-      const textCell = document.createDocumentFragment();
-      textCell.appendChild(document.createComment(" field:content_text "));
-      if (title) textCell.appendChild(title);
+      const imageCell = document.createElement("div");
+      if (image) imageCell.appendChild(image);
+      const textCell = [];
+      if (title) textCell.push(title);
       if (cta && cta.getAttribute("href")) {
         const p = document.createElement("p");
         p.appendChild(cta);
-        textCell.appendChild(p);
+        textCell.push(p);
       }
       cells.push([imageCell, textCell]);
     });
